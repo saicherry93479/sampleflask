@@ -12,11 +12,17 @@ from flask import Flask
 
 app = Flask(__name__)
 
+import os
+import subprocess
+
+if not os.path.isfile('model.h5'):
+    subprocess.run(['curl', '--output', 'model.h5', 'https://media.githubusercontent.com/media/saicherry93479/sampleFlask/main/vgg.h5'], shell=True)
+
 
 print("came one ")
 
 # K.clear_session()
-model = load_model('vgg.h5')
+model = load_model('model.h5')
 
 # Function to preprocess the image
 def preprocess_image(img_path):
@@ -36,9 +42,9 @@ prediction=predict_image('./sample.jpeg')
 # print(prediction)
 @app.route('/')
 def home():
-    prediction=predict_image('/content/drive/My Drive/samplemodel.jpeg')
+    prediction=predict_image('./sample.jpeg')
     return 'Hello, this is your Flask app running on Google Colab!'
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

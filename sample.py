@@ -30,6 +30,11 @@ def predict_image(img_path):
     prediction = model.predict(img)
     return prediction
 
+
+@app.route("/")
+def sample():
+    return 'WORKING'
+
 # API endpoint to accept image and return predictions
 @app.route('/predict', methods=['POST'])
 def predict():
